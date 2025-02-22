@@ -1,3 +1,6 @@
 .idea/
 __pychache__/
 .venv/
+user/__pycache__/
+db.sqlite3
+py_library_service/__pycache__/
