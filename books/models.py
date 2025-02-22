@@ -5,8 +5,8 @@ from django.utils.translation import gettext_lazy as _
 class Book(models.Model):
 
     class CoverChoices(models.TextChoices):
-        HARD = "hard", _("HARD")
-        SOFT = "soft", _("SOFT")
+        HARD = "HRD", _("HARD")
+        SOFT = "SFT", _("SOFT")
 
     title = models.CharField(max_length=100, unique=True)
     author = models.CharField(max_length=100)
@@ -20,4 +20,4 @@ class Book(models.Model):
         ordering = ("title",)
 
     def __str__(self) -> str:
-        return f"{self.title} {self.author}"
+        return f"{self.title} by {self.author}"
