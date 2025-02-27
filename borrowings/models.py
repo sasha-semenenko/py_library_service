@@ -1,3 +1,5 @@
+from datetime import date
+
 from django.db import models
 from rest_framework.exceptions import ValidationError
 
@@ -16,6 +18,7 @@ class Borrowing(models.Model):
         Customer, on_delete=models.CASCADE, related_name="borrowed_customer"
     )
     is_active = models.BooleanField(default=True)
+    count_return_book = models.IntegerField(default=0, blank=True, null=True)
 
     class Meta:
         ordering = ["-borrow_date"]
@@ -25,12 +28,18 @@ class Borrowing(models.Model):
         return f"{self.book.title} - {self.borrow_date}"
 
     @staticmethod
-    def validated_book_inventory(inventory: int, error_to_raise):
+    def validated_book_inventory(inventory: int, return_book: int, error_to_raise):
         if inventory < 0:
-            raise error_to_raise(f"Inventory in book is {inventory} that is not more or equal than 0")
+            raise error_to_raise(
+                f"Inventory in book is {inventory} that is not more or equal 0"
+            )
+        if return_book == 2:
+            raise error_to_raise("You can not return book twice")
 
     def clean(self):
-        Borrowing.validated_book_inventory(self.book.inventory, error_to_raise=ValidationError)
+        Borrowing.validated_book_inventory(
+            self.book.inventory, self.count_return_book, error_to_raise=ValidationError
+        )
 
     def save(self, *args, **kwargs):
         if not self.actual_return_date:

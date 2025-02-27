@@ -39,6 +39,7 @@ INSTALLED_APPS = [
     "django.contrib.sites",
     "django.contrib.redirects",
     "django.contrib.messages",
+    "django.contrib.staticfiles",
     "rest_framework",
     "rest_framework_simplejwt",
     "user",
@@ -134,7 +135,7 @@ AUTH_USER_MODEL = "user.Customer"
 REST_FRAMEWORK = {
     "DEFAULT_AUTHENTICATION_CLASSES": (
         "rest_framework_simplejwt.authentication.JWTAuthentication",
-    )
+    ),
 }
 
 SIMPLE_JWT = {

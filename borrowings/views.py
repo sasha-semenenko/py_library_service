@@ -5,6 +5,7 @@ from rest_framework.decorators import api_view
 from rest_framework.response import Response
 
 from books.models import Book
+from books.permissions import IsAdminOrAuthenticatedReadOnly
 from borrowings.models import Borrowing
 from borrowings.serializers import (
     BorrowingSerializer,
@@ -18,6 +19,7 @@ from user.models import Customer
 class BorrowingCreateViewSet(generics.CreateAPIView):
     queryset = Borrowing.objects.select_related("customer", "book")
     serializer_class = BorrowingSerializer
+    permission_classes = (IsAdminOrAuthenticatedReadOnly,)
 
 
 class BorrowListViewSet(generics.ListAPIView):
@@ -46,11 +48,12 @@ class BorrowingReturnBookViewSet(generics.UpdateAPIView):
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
         instance.is_active = not instance.is_active
+        instance.count_return_book += 1
         serializer = self.get_serializer(instance, data=request.data)
         serializer.is_valid(raise_exception=True)
         self.perform_update(serializer)
 
-        if getattr(instance, '_prefetched_objects_cache', None):
+        if getattr(instance, "_prefetched_objects_cache", None):
             instance._prefetched_objects_cache = {}
 
         return Response(serializer.data)
