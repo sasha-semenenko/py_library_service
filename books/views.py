@@ -1,4 +1,4 @@
-from rest_framework import viewsets, generics, mixins
+from rest_framework import generics
 
 from books.models import Book
 from books.permissions import IsAdminOrAuthenticatedReadOnly

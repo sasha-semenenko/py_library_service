@@ -1,8 +1,6 @@
 from django.contrib.auth import get_user_model
 from rest_framework import serializers
 
-from user.models import Customer
-
 
 class CustomerSerializer(serializers.ModelSerializer):
     class Meta:

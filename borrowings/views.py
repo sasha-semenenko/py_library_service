@@ -1,10 +1,8 @@
-from django.contrib.redirects.models import Redirect
-from django.shortcuts import get_object_or_404
-from rest_framework import viewsets, generics
-from rest_framework.decorators import api_view
+
+from rest_framework import generics
 from rest_framework.response import Response
 
-from books.models import Book
+
 from books.permissions import IsAdminOrAuthenticatedReadOnly
 from borrowings.models import Borrowing
 from borrowings.serializers import (
@@ -13,7 +11,6 @@ from borrowings.serializers import (
     BorrowingDetailSerializer,
     BorrowingReturnBookSerializer,
 )
-from user.models import Customer
 
 
 class BorrowingCreateViewSet(generics.CreateAPIView):
