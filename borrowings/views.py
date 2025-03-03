@@ -1,4 +1,3 @@
-
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -21,6 +20,7 @@ class BorrowingCreateViewSet(generics.CreateAPIView):
 
 class BorrowListViewSet(generics.ListAPIView):
     serializer_class = BorrowingListSerializer
+    permission_classes = (IsAdminOrAuthenticatedReadOnly,)
 
     def get_queryset(self):
         queryset = Borrowing.objects.select_related("customer", "book")
@@ -36,11 +36,13 @@ class BorrowListViewSet(generics.ListAPIView):
 class BorrowingDetailViewSet(generics.RetrieveDestroyAPIView):
     queryset = Borrowing.objects.select_related("customer", "book")
     serializer_class = BorrowingDetailSerializer
+    permission_classes = (IsAdminOrAuthenticatedReadOnly,)
 
 
 class BorrowingReturnBookViewSet(generics.UpdateAPIView):
     queryset = Borrowing.objects.select_related("customer", "book")
     serializer_class = BorrowingReturnBookSerializer
+    permission_classes = (IsAdminOrAuthenticatedReadOnly,)
 
     def update(self, request, *args, **kwargs):
         instance = self.get_object()
