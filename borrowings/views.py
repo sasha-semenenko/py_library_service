@@ -1,3 +1,4 @@
+from drf_spectacular.utils import extend_schema, OpenApiParameter
 from rest_framework import generics
 from rest_framework.response import Response
 
@@ -31,6 +32,23 @@ class BorrowListViewSet(generics.ListAPIView):
         if active:
             queryset = queryset.filter(is_active=active)
         return queryset
+
+    @extend_schema(
+        parameters=[
+            OpenApiParameter(
+                name="customer",
+                description="Filter by customer id (example: ?customer=1)",
+                type=int,
+            ),
+            OpenApiParameter(
+                name="is_active",
+                description="Filter by is_active status (example: ?is_active=True)",
+                type=bool,
+            ),
+        ]
+    )
+    def list(self, request, *args, **kwargs):
+        return super().list(request, *args, **kwargs)
 
 
 class BorrowingDetailViewSet(generics.RetrieveDestroyAPIView):
