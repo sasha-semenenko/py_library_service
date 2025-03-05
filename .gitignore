@@ -6,3 +6,4 @@ db.sqlite3
 py_library_service/__pycache__/
 books/__pycache__/
 borrowings/migrations/__pycache__/
+.env
