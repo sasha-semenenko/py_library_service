@@ -1,6 +1,4 @@
 .idea/
-__pycache__/
-__pycache__/manage.cpython-313.pyc
 .venv/
 user/__pycache__/
 db.sqlite3
@@ -10,6 +8,8 @@ borrowings/migrations/__pycache__/
 
 *.py[cod]
 *$py.class
+*.pyc
+__pycache__/
 
 *.so
 .Python
